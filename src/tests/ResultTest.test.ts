@@ -60,7 +60,7 @@ describe("Results cases",() => {
 
     it('Result codebashing successful case', async () => {
         const auth = new CxWrapper(cxScanConfig);
-        const cxCommandOutput: CxCommandOutput = await auth.codeBashingList("79","PHP","Reflected XSS All Clients");
+        const cxCommandOutput: CxCommandOutput = await auth.codeBashingList("8481125285487743346");
         expect(cxCommandOutput.payload.length).toBeGreaterThan(0);
     });
 

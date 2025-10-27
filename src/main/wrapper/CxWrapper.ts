@@ -358,8 +358,8 @@ export class CxWrapper {
         return await exec.executeCommands(this.config.pathToExecutable, commands);
     }
 
-    async codeBashingList(cweId: string, language: string, queryName: string): Promise<CxCommandOutput> {
-        const commands: string[] = [CxConstants.CMD_RESULT, CxConstants.CMD_CODE_BASHING, CxConstants.LANGUAGE, language, CxConstants.VULNERABILITY_TYPE, queryName, CxConstants.CWE_ID, cweId];
+    async codeBashingList(queryId: string): Promise<CxCommandOutput> {
+        const commands: string[] = [CxConstants.CMD_RESULT, CxConstants.CMD_CODE_BASHING, CxConstants.QUERY_ID, queryId];
         commands.push(...this.initializeCommands(true));
         const exec = new ExecutionService();
         return await exec.executeCommands(this.config.pathToExecutable, commands, CxConstants.CODE_BASHING_TYPE);
