@@ -1,11 +1,11 @@
 export default class CxCodeBashing {
-  path: string;
+  lessonUrl: string;
 
   static parseCodeBashing(resultObject: any[]): CxCodeBashing[] {
     let codeBashingLink: CxCodeBashing[] = [];
     codeBashingLink = resultObject.map((member: any) => {
       const codeBashing = new CxCodeBashing();
-      codeBashing.path = member.path;
+      codeBashing.lessonUrl = member.lessonUrl;
       return codeBashing;
     });
     return codeBashingLink;
