@@ -116,6 +116,7 @@ export enum CxConstants {
     CMD_LEARN_MORE = "learn-more",
     IDE_SCANS_KEY = "scan.config.plugins.ideScans",
     AI_GUIDED_REMEDIATION_KEY = "scan.config.plugins.aiGuidedRemediation",
+    STANDALONE_KEY = "scan.config.plugins.standalone",
     AI_MCP_SERVER_KEY = "scan.config.plugins.aiMcpServer",
     TELEMETRY = "telemetry",
     SUB_CMD_TELEMETRY_AI = "ai",
