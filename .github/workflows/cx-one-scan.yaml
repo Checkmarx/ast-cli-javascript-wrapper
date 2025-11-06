@@ -20,6 +20,6 @@ jobs:
           with:
             base_uri: ${{ secrets.CX_BASE_URI }}
             cx_tenant: ${{ secrets.CX_TENANT }}
-            cx_client_id: ${{ secretsCX_CLIENT_ID }}
+            cx_client_id: ${{ secrets.CX_CLIENT_ID }}
             cx_client_secret: ${{ secrets.CX_CLIENT_SECRET }}
             additional_params: --scan-types sast,iac-security,sca --threshold "sca-critical=1;sca-high=1;sca-medium=1;sca-low=1;sast-critical=1;sast-high=1;sast-medium=1;sast-low=1;iac-security-critical=1;iac-security-high=1;iac-security-medium=1;iac-security-low=1"
