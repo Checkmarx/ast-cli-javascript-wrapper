@@ -55,6 +55,9 @@ export class CxWrapper {
         if (cxScanConfig.additionalParameters) {
             this.config.additionalParameters = cxScanConfig.additionalParameters;
         }
+        if (cxScanConfig.agentName) {
+            this.config.agentName = cxScanConfig.agentName;
+        }
     }
 
 
@@ -88,6 +91,10 @@ export class CxWrapper {
             this.prepareAdditionalParams(this.config.additionalParameters).forEach(function (param) {
                 list.push(param)
             })
+        }
+        if (this.config.agentName) {
+            list.push(CxConstants.AGENT);
+            list.push(this.config.agentName);
         }
         if (formatRequired) {
             list.push(CxConstants.FORMAT);
@@ -142,12 +149,6 @@ export class CxWrapper {
 
     if (updateVersion) {
         commands.push(CxConstants.ASCA_UPDATE_VERSION);
-    }
-
-    if (agent) {
-        commands.push(CxConstants.AGENT, agent);
-    } else {
-        commands.push(CxConstants.AGENT, '"js-wrapper"');
     }
 
     if (ignoredFilePath) {
@@ -374,10 +375,6 @@ export class CxWrapper {
         if (outputPath) {
             commands.push(CxConstants.OUTPUT_PATH);
             commands.push(outputPath);
-        }
-        if (agent) {
-            commands.push(CxConstants.AGENT);
-            commands.push(agent);
         }
         commands.push(...this.initializeCommands(false));
         return commands;
