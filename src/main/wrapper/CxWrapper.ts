@@ -552,7 +552,6 @@ export class CxWrapper {
             CxConstants.TELEMETRY,
             CxConstants.SUB_CMD_TELEMETRY_AI,
             CxConstants.AI_PROVIDER, aiProvider,
-            CxConstants.AGENT, agent,
             CxConstants.TYPE, eventType,
             CxConstants.SUB_TYPE, subType,
             CxConstants.ENGINE, engine,
