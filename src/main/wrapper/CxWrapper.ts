@@ -352,8 +352,8 @@ export class CxWrapper {
         return exec.executeResultsCommandsFile(scanId, CxConstants.FORMAT_HTML, CxConstants.FORMAT_HTML_FILE, commands, this.config.pathToExecutable, fileName);
     }
 
-    async getResults(scanId: string, resultType: string, outputFileName: string, outputFilePath: string, agent?: string | null) {
-        const commands = this.resultsShow(scanId, resultType, outputFileName, outputFilePath, agent)
+    async getResults(scanId: string, resultType: string, outputFileName: string, outputFilePath: string) {
+        const commands = this.resultsShow(scanId, resultType, outputFileName, outputFilePath)
         const exec = new ExecutionService();
         return await exec.executeCommands(this.config.pathToExecutable, commands);
     }
