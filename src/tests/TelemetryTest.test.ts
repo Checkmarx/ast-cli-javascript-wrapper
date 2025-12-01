@@ -9,7 +9,6 @@ describe("Telemetry cases", () => {
         const wrapper = new CxWrapper(cxScanConfig);
         const cxCommandOutput: CxCommandOutput = await wrapper.telemetryAIEvent(
             "Cursor", 
-            "Cursos", 
             "click",  
             "ast-results.viewPackageDetails",
             "secrets",   
@@ -30,7 +29,6 @@ describe("Telemetry cases", () => {
             "",
             "",
             "",
-            "",
             "asca",
             "Critical",
             10
@@ -43,8 +41,7 @@ describe("Telemetry cases", () => {
     it('TelemetryAIEvent Successful case with edge case parameters', async () => {
         const wrapper = new CxWrapper(cxScanConfig);
         const cxCommandOutput: CxCommandOutput = await wrapper.telemetryAIEvent(
-            "",              
-            "",         
+            "",        
             "",
             "",             
             "",          
