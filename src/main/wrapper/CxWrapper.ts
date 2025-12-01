@@ -137,7 +137,6 @@ export class CxWrapper {
    async scanAsca(
     sourceFile: string,
     updateVersion = false,
-    agent?: string | null,
     ignoredFilePath?: string
 ): Promise<CxCommandOutput> {
     const commands: string[] = [
@@ -366,7 +365,7 @@ export class CxWrapper {
         return await exec.executeCommands(this.config.pathToExecutable, commands, CxConstants.CODE_BASHING_TYPE);
     }
 
-    resultsShow(scanId: string, reportFormat: string, outputFileName: string, outputPath: string, agent?: string | null): string[] {
+    resultsShow(scanId: string, reportFormat: string, outputFileName: string, outputPath: string): string[] {
         const commands: string[] = [CxConstants.CMD_RESULT, CxConstants.SUB_CMD_SHOW, CxConstants.SCAN_ID, scanId, CxConstants.REPORT_FORMAT, reportFormat];
         if (outputFileName) {
             commands.push(CxConstants.OUTPUT_NAME);
