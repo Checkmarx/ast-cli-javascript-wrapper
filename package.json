@@ -1,5 +1,5 @@
 {
-  "name": "@CheckmarxDev/ast-cli-javascript-wrapper",
+  "name": "@Checkmarx/ast-cli-javascript-wrapper",
   "version": "0.0.146",
   "description": "AST CLI Javascript wrapper",
   "main": "dist/main/wrapper/CxWrapper.js",
@@ -18,13 +18,13 @@
     "lint-and-fix": "eslint . --ext .ts --fix",
     "test": "copyfiles -u 1 src/tests/data/* dist/; tsc && jest"
   },
-  "repository": "https://github.com/CheckmarxDev/ast-cli-javascript-wrapper.git",
+  "repository": "https://github.com/Checkmarx/ast-cli-javascript-wrapper.git",
   "author": "Jay Nanduri",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CheckmarxDev/ast-cli-javascript-wrapper/issues"
+    "url": "https://github.com/Checkmarx/ast-cli-javascript-wrapper/issues"
   },
-  "homepage": "https://github.com/CheckmarxDev/ast-cli-javascript-wrapper#readme",
+  "homepage": "https://github.com/Checkmarx/ast-cli-javascript-wrapper#readme",
   "devDependencies": {
     "@types/jest": "^27.5.0",
     "@types/node": "^22.9.0",
