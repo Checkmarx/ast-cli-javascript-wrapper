@@ -80,14 +80,12 @@ describe("Triage cases", () => {
         let errorShow = false;
         let errorUpdate = false;
         try {
-            // @ts-ignore
             const cxShow: CxCommandOutput = await auth.triageSCAShow(undefined, undefined, undefined);
             expect(cxShow.exitCode).not.toEqual(0);
         } catch (e) {
             errorShow = true;
         }
         try {
-            // @ts-ignore
             const cxUpdate: CxCommandOutput = await auth.triageSCAUpdate(undefined, undefined, undefined, undefined, undefined);
             expect(cxUpdate.exitCode).not.toEqual(0);
         } catch (e) {
