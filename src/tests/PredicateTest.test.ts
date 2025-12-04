@@ -47,8 +47,8 @@ describe("Triage cases", () => {
     };
 
     // Helper for SCA triage update
-    const handleTriageSCAUpdate = async (projectId: string, vulnerabilities: string, scanType: string, state: string, comment: string, stateId: number | null = null) => {
-        const cxUpdate: CxCommandOutput = await auth.triageSCAUpdate(projectId, vulnerabilities, scanType, state, comment, stateId);
+    const handleTriageSCAUpdate = async (projectId: string, vulnerabilities: string, scanType: string, state: string, comment: string) => {
+        const cxUpdate: CxCommandOutput = await auth.triageSCAUpdate(projectId, vulnerabilities, scanType, state, comment);
         expect(cxUpdate.exitCode).toEqual(0);
     };
     
