@@ -1,4 +1,5 @@
 export enum CxConstants {
+    VULNERABILITIES = "--vulnerabilities",
     IGNORE__FILE_PATH = "--ignored-file-path",
     SOURCE = "-s",
     VERBOSE = "-v",
