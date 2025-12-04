@@ -70,6 +70,40 @@ describe("Triage cases", () => {
         await handleTriageSCAUpdate(projectId, vulnerabilities, scanType, state, comment);
     });
     
+    it('SCA Triage Show and Update Failure case', async () => {
+        const projectId = "invalid-project-id";
+        const vulnerabilities = "invalid-vulnerability-string";
+        const scanType = "invalid";
+        const state = "invalid_state";
+        const comment = "invalid_comment";
+
+        const cxShow: CxCommandOutput = await auth.triageSCAShow(projectId, vulnerabilities, scanType);
+        expect(cxShow.exitCode).not.toEqual(0);
+        
+        const cxUpdate: CxCommandOutput = await auth.triageSCAUpdate(projectId, vulnerabilities, scanType, state, comment);
+        expect(cxUpdate.exitCode).not.toEqual(0);
+    });
+    
+    it('SCA Triage Show and Update with empty vulnerabilities', async () => {
+        const projectId = "d4d7f382-8dee-48c7-ac8f-67fab2c313a8";
+        const vulnerabilities = "";
+        const scanType = "sca";
+        const state = "To_verify";
+        const comment = "comment1";
+        const cxShow: CxCommandOutput = await auth.triageSCAShow(projectId, vulnerabilities, scanType);
+        expect(cxShow.exitCode).not.toEqual(0);
+
+        const cxUpdate: CxCommandOutput = await auth.triageSCAUpdate(projectId, vulnerabilities, scanType, state, comment);
+        expect(cxUpdate.exitCode).not.toEqual(0);
+    });
+
+    it('SCA Triage Show and Update with null/undefined arguments', async () => {
+        const cxShow: CxCommandOutput = await auth.triageSCAShow(undefined, undefined, undefined);
+        expect(cxShow.exitCode).not.toEqual(0);
+        const cxUpdate: CxCommandOutput = await auth.triageSCAUpdate(undefined, undefined, undefined, undefined, undefined);
+        expect(cxUpdate.exitCode).not.toEqual(0);
+    });
+
     it('Triage Successful case', async () => {
         const { scan, result } = await getScanAndResult();
         await handleTriageShow(scan, result);
