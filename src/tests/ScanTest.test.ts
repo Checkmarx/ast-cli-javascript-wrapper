@@ -292,7 +292,6 @@ it.skip('ScanAsca with ignore file should filter one result', async () => {
     const cxCommandOutput: CxCommandOutput = await wrapper.scanAsca(
         sourcePath,
         false,
-        null,
         ignoreFile
     );
 
