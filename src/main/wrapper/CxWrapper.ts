@@ -298,6 +298,34 @@ export class CxWrapper {
         return await exec.executeCommands(this.config.pathToExecutable, commands, CxConstants.PREDICATE_TYPE);
     }
 
+    async triageSCAShow(projectId: string, vulnerabilities: string, scanType: string): Promise<CxCommandOutput> {
+        const commands: string[] = [
+            CxConstants.CMD_TRIAGE,
+            CxConstants.SUB_CMD_SHOW,
+            CxConstants.SCAN_TYPES_SUB_CMD, scanType,
+            CxConstants.VULNERABILITIES, vulnerabilities,
+            CxConstants.PROJECT_ID, projectId
+        ];
+        commands.push(...this.initializeCommands(true));
+        const exec = new ExecutionService();
+        return await exec.executeCommands(this.config.pathToExecutable, commands, CxConstants.PREDICATE_TYPE);
+    }
+
+    async triageSCAUpdate(projectId: string, vulnerabilities: string, scanType: string, state: string, comment: string): Promise<CxCommandOutput> {
+        const commands: string[] = [
+            CxConstants.CMD_TRIAGE,
+            CxConstants.SUB_CMD_UPDATE,
+            CxConstants.SCAN_TYPES_SUB_CMD, scanType,
+            CxConstants.VULNERABILITIES, vulnerabilities,
+            CxConstants.STATE, state,
+            CxConstants.COMMENT, comment,
+            CxConstants.PROJECT_ID, projectId
+        ];
+        commands.push(...this.initializeCommands(false));
+        const exec = new ExecutionService();
+        return await exec.executeCommands(this.config.pathToExecutable, commands);
+    }
+
     async triageUpdate(projectId: string, similarityId: string, scanType: string, state: string, comment: string, severity: string, stateId: number | null = null): Promise<CxCommandOutput> {
         const commands: string[] = [CxConstants.CMD_TRIAGE, CxConstants.SUB_CMD_UPDATE, CxConstants.PROJECT_ID, projectId, CxConstants.SIMILARITY_ID, similarityId, CxConstants.SCAN_TYPES_SUB_CMD, scanType, CxConstants.STATE, state, CxConstants.COMMENT, comment, CxConstants.SEVERITY, severity];
         if (stateId) {
