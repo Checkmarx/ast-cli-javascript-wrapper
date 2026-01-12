@@ -11,8 +11,6 @@ import path = require('path');
 import { getTrimmedMapValue } from "./utils";
 import { JwtClaims } from "../license/JwtClaims";
 
-export { JwtClaims } from "../license/JwtClaims";
-
 type ParamTypeMap = Map<CxParamType, string>;
 
 export class CxWrapper {
