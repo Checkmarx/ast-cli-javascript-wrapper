@@ -21,6 +21,7 @@ export enum CxConstants {
     CMD_REMEDIATION = "remediation",
     SUB_CMD_REMEDIATION_SCA = "sca",
     SUB_CMD_TENANT = "tenant",
+    SUB_CMD_LICENSE = "license",
     KICS_REMEDIATION_RESULTS_FILE = "--results-file",
     KICS_REMEDIATION_KICS_FILE = "--kics-files",
     KICS_REMEDIATION_SIMILARITY_IDS = "--similarity-ids",

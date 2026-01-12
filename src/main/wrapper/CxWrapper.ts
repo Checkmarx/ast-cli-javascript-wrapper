@@ -9,6 +9,9 @@ import * as os from "os";
 import CxBFL from "../bfl/CxBFL";
 import path = require('path');
 import { getTrimmedMapValue } from "./utils";
+import { JwtClaims } from "../license/JwtClaims";
+
+export { JwtClaims } from "../license/JwtClaims";
 
 type ParamTypeMap = Map<CxParamType, string>;
 
@@ -650,5 +653,26 @@ export class CxWrapper {
             r.push(filters);
         }
         return r;
+    }
+
+    /**
+     * Gets license details from the JWT token
+     */
+    async getLicenseDetails(): Promise<JwtClaims | null> {
+        const commands: string[] = [
+            CxConstants.CMD_UTILS,
+            CxConstants.SUB_CMD_LICENSE,
+            CxConstants.FORMAT,
+            CxConstants.FORMAT_JSON
+        ];
+        commands.push(...this.initializeCommands(false));
+
+        const exec = new ExecutionService();
+        const output = await exec.executeCommands(this.config.pathToExecutable, commands);
+
+        if (output.exitCode === 0 && output.payload) {
+            return JwtClaims.fromJson(output.payload);
+        }
+        return null;
     }
 }
