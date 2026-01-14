@@ -512,6 +512,17 @@ export class CxWrapper {
         return value?.toLowerCase() === "true";
     }
 
+    async dastEnabled(): Promise<boolean> {
+        const commands: string[] = [CxConstants.CMD_UTILS, CxConstants.SUB_CMD_TENANT];
+        commands.push(...this.initializeCommands(false));
+
+        const exec = new ExecutionService();
+        const output = await exec.executeMapTenantOutputCommands(this.config.pathToExecutable, commands);
+
+        const value = getTrimmedMapValue(output, CxConstants.DAST_ENABLED_KEY);
+        return value?.toLowerCase() === "true";
+    }
+
     async aiMcpServerEnabled(): Promise<boolean> {
         const commands: string[] = [CxConstants.CMD_UTILS, CxConstants.SUB_CMD_TENANT];
         commands.push(...this.initializeCommands(false));

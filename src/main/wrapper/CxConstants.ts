@@ -119,6 +119,7 @@ export enum CxConstants {
     AI_GUIDED_REMEDIATION_KEY = "scan.config.plugins.aiGuidedRemediation",
     STANDALONE_KEY = "scan.config.plugins.cxdevassist",
     ASSIST_KEY = "scan.config.plugins.cxoneassist",
+    DAST_ENABLED_KEY = "scan.config.plugins.dastenabled",
     AI_MCP_SERVER_KEY = "scan.config.plugins.aiMcpServer",
     TELEMETRY = "telemetry",
     SUB_CMD_TELEMETRY_AI = "ai",
