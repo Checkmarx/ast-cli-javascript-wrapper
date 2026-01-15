@@ -280,7 +280,7 @@ export class CxWrapper {
         const commands: string[] = ([CxConstants.CMD_ENVIRONMENTS, CxConstants.SUB_CMD_LIST] as string[]).concat(validated_filters);
         commands.push(...this.initializeCommands(true));
         const exec = new ExecutionService();
-        return await exec.executeCommands(this.config.pathToExecutable, commands, CxConstants.ENVIRONMENT_TYPE);
+        return await exec.executeCommands(this.config.pathToExecutable, commands, CxConstants.DAST_ENVIRONMENT_TYPE);
     }
 
     async projectBranches(projectId: string, filters: string): Promise<CxCommandOutput> {

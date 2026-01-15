@@ -1,4 +1,4 @@
-export default class CxEnvironment {
+export default class CxDastEnvironment {
   id: string;
   name: string;
   url: string;
@@ -8,11 +8,11 @@ export default class CxEnvironment {
   lastScanTime: string;
   lastStatus: string
 
-  static parseEnvironment(resultObject: any): CxEnvironment[] {
-    let environments: CxEnvironment[] = [];
+  static parseDastEnvironment(resultObject: any): CxDastEnvironment[] {
+    let environments: CxDastEnvironment[] = [];
 
-    const parseEnvironment = (result: any): CxEnvironment => {
-      const environment = new CxEnvironment();
+    const parseDastEnvironmentResult = (result: any): CxDastEnvironment => {
+      const environment = new CxDastEnvironment();
       environment.id = result.EnvironmentID;
       environment.name = result.Domain;
       environment.url = result.URL;
@@ -25,9 +25,9 @@ export default class CxEnvironment {
     }
 
     if (resultObject instanceof Array) {
-      environments = resultObject.map((result: any) => parseEnvironment(result));
+      environments = resultObject.map((result: any) => parseDastEnvironmentResult(result));
     } else {
-      const environment = parseEnvironment(resultObject)
+      const environment = parseDastEnvironmentResult(resultObject)
       environments.push(environment);
     }
     return environments;
