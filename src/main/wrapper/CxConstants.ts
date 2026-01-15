@@ -30,6 +30,7 @@ export enum CxConstants {
     CMD_AUTH = "auth",
     SUB_CMD_VALIDATE = "validate",
     CMD_PROJECT = "project",
+    CMD_DAST_ENVIRONMENTS = 'dast-environments',
     SUB_CMD_BRANCHES = "branches",
     CMD_SCAN = "scan",
     SUB_CMD_SHOW = "show",
