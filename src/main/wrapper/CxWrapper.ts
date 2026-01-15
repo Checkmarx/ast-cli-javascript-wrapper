@@ -275,7 +275,7 @@ export class CxWrapper {
         return await exec.executeCommands(this.config.pathToExecutable, commands, CxConstants.PROJECT_TYPE);
     }
 
-    async environmentsList(filters: string): Promise<CxCommandOutput> {
+    async dastEnvironmentsList(filters: string): Promise<CxCommandOutput> {
         const validated_filters = this.filterArguments(filters);
         const commands: string[] = ([CxConstants.CMD_DAST_ENVIRONMENTS, CxConstants.SUB_CMD_LIST] as string[]).concat(
           validated_filters
