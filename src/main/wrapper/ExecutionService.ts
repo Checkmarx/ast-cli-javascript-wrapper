@@ -28,6 +28,7 @@ import CxSecretsResult from "../secrets/CxSecrets";
 import CxContainerRealtimeResult from "../containersRealtime/CxContainerRealtime";
 import CxIacResult from "../iacRealtime/CxIac";
 import CxDastEnvironment from "../dast/CxDastEnvironment";
+import CxDastScan from "../dast/CxDastScan";
 
 let skipValue = false;
 const fileSourceFlag = "--file-source"
@@ -233,6 +234,10 @@ export class ExecutionService {
                     case CxConstants.DAST_ENVIRONMENT_TYPE:
                         const environments = CxDastEnvironment.parseDastEnvironment(resultObject);
                         cxCommandOutput.payload = environments;
+                        break;
+                    case CxConstants.DAST_SCAN_TYPE:
+                        const dastScans = CxDastScan.parseDastScan(resultObject);
+                        cxCommandOutput.payload = dastScans;
                         break;
                     case CxConstants.CODE_BASHING_TYPE:
                         const codeBashing = CxCodeBashing.parseCodeBashing(resultObject);
