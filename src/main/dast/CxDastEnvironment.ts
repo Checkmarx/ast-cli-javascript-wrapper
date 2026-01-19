@@ -5,6 +5,7 @@ export default class CxDastEnvironment {
   scanType: string;
   createdAt: string;
   riskRating: string;
+  lastScanId: string;
   lastScanTime: string;
   lastStatus: string
 
@@ -19,6 +20,7 @@ export default class CxDastEnvironment {
       environment.scanType = result.ScanType;
       environment.createdAt = result.Created;
       environment.riskRating = result.RiskRating;
+      environment.lastScanId = result.LastScanID;
       environment.lastScanTime = result.LastScanTime;
       environment.lastStatus = result.LastStatus;
       return environment;
