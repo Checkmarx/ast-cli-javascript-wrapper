@@ -15,7 +15,7 @@ jobs:
     if: ${{ github.event.pull_request.user.type != 'Bot' }}
     steps:
       - name: Set up GitHub CLI
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           version: latest
 
