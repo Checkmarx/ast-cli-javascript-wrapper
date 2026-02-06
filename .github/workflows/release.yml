@@ -57,7 +57,7 @@ jobs:
     steps:
 
       # CHECKOUT PROJECT
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           lfs: true  # Ensure LFS files are checked out
