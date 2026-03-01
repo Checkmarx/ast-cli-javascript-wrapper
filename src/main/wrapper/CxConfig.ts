@@ -7,4 +7,5 @@ export class CxConfig {
     apiKey: string;
     tenant: string;
     additionalParameters:string;
+    agentName: string;
 }

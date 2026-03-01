@@ -55,6 +55,9 @@ export class CxWrapper {
         if (cxScanConfig.additionalParameters) {
             this.config.additionalParameters = cxScanConfig.additionalParameters;
         }
+        if (cxScanConfig.agentName) {
+            this.config.agentName = cxScanConfig.agentName;
+        }
     }
 
 
@@ -88,6 +91,10 @@ export class CxWrapper {
             this.prepareAdditionalParams(this.config.additionalParameters).forEach(function (param) {
                 list.push(param)
             })
+        }
+        if (this.config.agentName) {
+            list.push(CxConstants.AGENT);
+            list.push(this.config.agentName);
         }
         if (formatRequired) {
             list.push(CxConstants.FORMAT);
@@ -130,7 +137,6 @@ export class CxWrapper {
    async scanAsca(
     sourceFile: string,
     updateVersion = false,
-    agent?: string | null,
     ignoredFilePath?: string
 ): Promise<CxCommandOutput> {
     const commands: string[] = [
@@ -142,12 +148,6 @@ export class CxWrapper {
 
     if (updateVersion) {
         commands.push(CxConstants.ASCA_UPDATE_VERSION);
-    }
-
-    if (agent) {
-        commands.push(CxConstants.AGENT, agent);
-    } else {
-        commands.push(CxConstants.AGENT, '"js-wrapper"');
     }
 
     if (ignoredFilePath) {
@@ -298,6 +298,34 @@ export class CxWrapper {
         return await exec.executeCommands(this.config.pathToExecutable, commands, CxConstants.PREDICATE_TYPE);
     }
 
+    async triageSCAShow(projectId: string, vulnerabilities: string, scanType: string): Promise<CxCommandOutput> {
+        const commands: string[] = [
+            CxConstants.CMD_TRIAGE,
+            CxConstants.SUB_CMD_SHOW,
+            CxConstants.SCAN_TYPES_SUB_CMD, scanType,
+            CxConstants.VULNERABILITIES, vulnerabilities,
+            CxConstants.PROJECT_ID, projectId
+        ];
+        commands.push(...this.initializeCommands(true));
+        const exec = new ExecutionService();
+        return await exec.executeCommands(this.config.pathToExecutable, commands, CxConstants.PREDICATE_TYPE);
+    }
+
+    async triageSCAUpdate(projectId: string, vulnerabilities: string, scanType: string, state: string, comment: string): Promise<CxCommandOutput> {
+        const commands: string[] = [
+            CxConstants.CMD_TRIAGE,
+            CxConstants.SUB_CMD_UPDATE,
+            CxConstants.SCAN_TYPES_SUB_CMD, scanType,
+            CxConstants.VULNERABILITIES, vulnerabilities,
+            CxConstants.STATE, state,
+            CxConstants.COMMENT, comment,
+            CxConstants.PROJECT_ID, projectId
+        ];
+        commands.push(...this.initializeCommands(false));
+        const exec = new ExecutionService();
+        return await exec.executeCommands(this.config.pathToExecutable, commands);
+    }
+
     async triageUpdate(projectId: string, similarityId: string, scanType: string, state: string, comment: string, severity: string, stateId: number | null = null): Promise<CxCommandOutput> {
         const commands: string[] = [CxConstants.CMD_TRIAGE, CxConstants.SUB_CMD_UPDATE, CxConstants.PROJECT_ID, projectId, CxConstants.SIMILARITY_ID, similarityId, CxConstants.SCAN_TYPES_SUB_CMD, scanType, CxConstants.STATE, state, CxConstants.COMMENT, comment, CxConstants.SEVERITY, severity];
         if (stateId) {
@@ -352,8 +380,8 @@ export class CxWrapper {
         return exec.executeResultsCommandsFile(scanId, CxConstants.FORMAT_HTML, CxConstants.FORMAT_HTML_FILE, commands, this.config.pathToExecutable, fileName);
     }
 
-    async getResults(scanId: string, resultType: string, outputFileName: string, outputFilePath: string, agent?: string | null) {
-        const commands = this.resultsShow(scanId, resultType, outputFileName, outputFilePath, agent)
+    async getResults(scanId: string, resultType: string, outputFileName: string, outputFilePath: string) {
+        const commands = this.resultsShow(scanId, resultType, outputFileName, outputFilePath)
         const exec = new ExecutionService();
         return await exec.executeCommands(this.config.pathToExecutable, commands);
     }
@@ -365,7 +393,7 @@ export class CxWrapper {
         return await exec.executeCommands(this.config.pathToExecutable, commands, CxConstants.CODE_BASHING_TYPE);
     }
 
-    resultsShow(scanId: string, reportFormat: string, outputFileName: string, outputPath: string, agent?: string | null): string[] {
+    resultsShow(scanId: string, reportFormat: string, outputFileName: string, outputPath: string): string[] {
         const commands: string[] = [CxConstants.CMD_RESULT, CxConstants.SUB_CMD_SHOW, CxConstants.SCAN_ID, scanId, CxConstants.REPORT_FORMAT, reportFormat];
         if (outputFileName) {
             commands.push(CxConstants.OUTPUT_NAME);
@@ -374,10 +402,6 @@ export class CxWrapper {
         if (outputPath) {
             commands.push(CxConstants.OUTPUT_PATH);
             commands.push(outputPath);
-        }
-        if (agent) {
-            commands.push(CxConstants.AGENT);
-            commands.push(agent);
         }
         commands.push(...this.initializeCommands(false));
         return commands;
@@ -466,6 +490,38 @@ export class CxWrapper {
         return value?.toLowerCase() === "true";
     }
 
+    async standaloneEnabled(): Promise<boolean> {
+        const commands: string[] = [CxConstants.CMD_UTILS, CxConstants.SUB_CMD_TENANT];
+        commands.push(...this.initializeCommands(false));
+
+        const exec = new ExecutionService();
+        const output = await exec.executeMapTenantOutputCommands(this.config.pathToExecutable, commands);
+
+        const value = getTrimmedMapValue(output, CxConstants.STANDALONE_KEY);
+        return value?.toLowerCase() === "true";
+    }
+
+    async cxOneAssistEnabled(): Promise<boolean> {
+        const commands: string[] = [CxConstants.CMD_UTILS, CxConstants.SUB_CMD_TENANT];
+        commands.push(...this.initializeCommands(false));
+
+        const exec = new ExecutionService();
+        const output = await exec.executeMapTenantOutputCommands(this.config.pathToExecutable, commands);
+
+        const value = getTrimmedMapValue(output, CxConstants.ASSIST_KEY);
+        return value?.toLowerCase() === "true";
+    }
+
+    async dastEnabled(): Promise<boolean> {
+        const commands: string[] = [CxConstants.CMD_UTILS, CxConstants.SUB_CMD_TENANT];
+        commands.push(...this.initializeCommands(false));
+
+        const exec = new ExecutionService();
+        const output = await exec.executeMapTenantOutputCommands(this.config.pathToExecutable, commands);
+
+        const value = getTrimmedMapValue(output, CxConstants.DAST_ENABLED_KEY);
+        return value?.toLowerCase() === "true";
+    }
 
     async aiMcpServerEnabled(): Promise<boolean> {
         const commands: string[] = [CxConstants.CMD_UTILS, CxConstants.SUB_CMD_TENANT];
@@ -530,12 +586,11 @@ export class CxWrapper {
         return new ExecutionService().executeCommands(this.config.pathToExecutable, commands, CxConstants.MASK_TYPE);
     }
 
-    telemetryAIEvent(aiProvider: string, agent: string, eventType: string, subType: string, engine: string, problemSeverity: string, scanType: string, status: string, totalCount: number): Promise<CxCommandOutput> {
+    telemetryAIEvent(aiProvider: string, eventType: string, subType: string, engine: string, problemSeverity: string, scanType: string, status: string, totalCount: number): Promise<CxCommandOutput> {
         const commands: string[] = [
             CxConstants.TELEMETRY,
             CxConstants.SUB_CMD_TELEMETRY_AI,
             CxConstants.AI_PROVIDER, aiProvider,
-            CxConstants.AGENT, agent,
             CxConstants.TYPE, eventType,
             CxConstants.SUB_TYPE, subType,
             CxConstants.ENGINE, engine,

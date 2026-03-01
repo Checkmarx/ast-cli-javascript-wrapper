@@ -20,7 +20,7 @@ describe("Results cases",() => {
         const cxCommandOutput: CxCommandOutput  = await auth.scanList("statuses=Completed");
         const sampleId  = cxCommandOutput.payload.pop().id;
         
-        auth.getResults(sampleId,"json","jsonList", ".", "jswrapper").then(() => {
+        auth.getResults(sampleId,"json","jsonList", "jswrapper").then(() => {
            fileExists("./jsonList.json").then(file => expect(file).toBe(true));
         });
     });

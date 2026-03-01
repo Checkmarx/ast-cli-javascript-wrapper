@@ -1,4 +1,5 @@
 export enum CxConstants {
+    VULNERABILITIES = "--vulnerability-identifiers",
     IGNORE__FILE_PATH = "--ignored-file-path",
     SOURCE = "-s",
     VERBOSE = "-v",
@@ -116,6 +117,9 @@ export enum CxConstants {
     CMD_LEARN_MORE = "learn-more",
     IDE_SCANS_KEY = "scan.config.plugins.ideScans",
     AI_GUIDED_REMEDIATION_KEY = "scan.config.plugins.aiGuidedRemediation",
+    STANDALONE_KEY = "scan.config.plugins.cxdevassist",
+    ASSIST_KEY = "scan.config.plugins.cxoneassist",
+    DAST_ENABLED_KEY = "scan.config.plugins.dastenabled",
     AI_MCP_SERVER_KEY = "scan.config.plugins.aiMcpServer",
     TELEMETRY = "telemetry",
     SUB_CMD_TELEMETRY_AI = "ai",

@@ -3,7 +3,7 @@
 				"*"
 		],
 		"bugs": {
-				"url": "https://github.com/CheckmarxDev/ast-vscode-extension/issues"
+				"url": "https://github.com/Checkmarx/ast-vscode-extension/issues"
 		},
 		"categories": [
 				"Other"
@@ -783,14 +783,14 @@
 				"ui",
 				"workspace"
 		],
-		"homepage": "https://github.com/CheckmarxDev/ast-vscode-extension#readme",
+		"homepage": "https://github.com/Checkmarx/ast-vscode-extension#readme",
 		"icon": "media/icon.png",
 		"main": "./out/extension.js",
 		"name": "ast-results",
 		"publisher": "checkmarx",
 		"repository": {
 				"type": "git",
-				"url": "https://github.com/CheckmarxDev/ast-vscode-extension.git"
+				"url": "https://github.com/Checkmarx/ast-vscode-extension.git"
 		},
 		"scripts": {
 				"compile": "tsc -p ./ \u0026\u0026 npm run copytestproject \u0026\u0026 npm run copymedia",

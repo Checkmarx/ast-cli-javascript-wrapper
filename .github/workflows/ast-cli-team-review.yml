@@ -29,7 +29,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.AST_CLI_GH_TOKEN }}
         run: |
-          gh api orgs/CheckmarxDev/teams/ast-sypher-team/members --jq '.[].login' > team_members.txt
+          gh api orgs/Checkmarx/teams/ast-sypher-team/members --jq '.[].login' > team_members.txt
           echo "✅ Team members:"
           cat team_members.txt
 
