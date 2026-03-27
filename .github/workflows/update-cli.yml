@@ -57,7 +57,7 @@ jobs:
       - name: Create Pull Request
         id: cretae_pull_request
         if: steps.checkmarx-ast-cli.outputs.current_tag != steps.checkmarx-ast-cli.outputs.release_tag
-        uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c #v6
+        uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0 #v8.1.0
         with:
           token: ${{ secrets.AUTOMATION_TOKEN }}
           commit-message: Update checkmarx-ast-cli to ${{ steps.checkmarx-ast-cli.outputs.release_tag }}
