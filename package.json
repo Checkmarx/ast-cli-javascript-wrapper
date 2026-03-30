@@ -40,7 +40,8 @@
   },
   "overrides": {
     "bluebird": "3.7.2",
-    "debug": "^4.4.0"
+    "debug": "^4.4.0",
+    "flatted": "^3.4.2"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
