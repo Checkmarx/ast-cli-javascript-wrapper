@@ -42,8 +42,7 @@
     "bluebird": "3.7.2",
     "debug": "^4.4.0",
     "flatted": "^3.4.2",
-    "picomatch": "2.3.2",
-    "underscore": "1.13.8"
+    "picomatch": "2.3.2"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
