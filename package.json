@@ -42,7 +42,11 @@
     "bluebird": "3.7.2",
     "debug": "^4.4.0",
     "flatted": "^3.4.2",
-    "picomatch": "2.3.2"
+    "picomatch": "2.3.2",
+    "serialize-javascript": "6.0.2",
+    "brace-expansion": "2.0.3",
+    "lodash": "4.18.0",
+    "uuid": "14.0.0"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
