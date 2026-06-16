@@ -9,9 +9,11 @@ permissions:
 
 jobs:
   update-checkmarx-cli:
+    permissions:
+      contents: write
     runs-on: cx-public-ubuntu-x64
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           lfs: true
 
@@ -29,23 +31,23 @@ jobs:
       - name: Get Latest Checkmarx API version
         id: checkmarx-ast-cli
         run: |
-          echo ::set-output name=release_tag::$(curl -sL https://api.github.com/repos/Checkmarx/ast-cli/releases/latest | jq -r ".tag_name")
-          echo ::set-output name=current_tag::$(<checkmarx-ast-cli.version)
+          echo "release_tag=$(curl -sL https://api.github.com/repos/Checkmarx/ast-cli/releases/latest | jq -r '.tag_name')" >> $GITHUB_OUTPUT
+          echo "current_tag=$(<checkmarx-ast-cli.version)" >> $GITHUB_OUTPUT
 
       - name: Update Checkmarx cli version
         if: steps.checkmarx-ast-cli.outputs.current_tag != steps.checkmarx-ast-cli.outputs.release_tag
         env:
           RELEASE_TAG: ${{ steps.checkmarx-ast-cli.outputs.release_tag }}
         run: |
-          # Update current release
-          echo ${{ steps.checkmarx-ast-cli.outputs.release_tag }} > checkmarx-ast-cli.version
+          echo "$RELEASE_TAG" > checkmarx-ast-cli.version
 
       - name: Download latest cli and update branch
         if: steps.checkmarx-ast-cli.outputs.current_tag != steps.checkmarx-ast-cli.outputs.release_tag
+        env:
+          RELEASE_TAG: ${{ steps.checkmarx-ast-cli.outputs.release_tag }}
         run: |
-          # Update binaries
           chmod +x ./.github/scripts/update_cli.sh
-          ./.github/scripts/update_cli.sh ${{ steps.checkmarx-ast-cli.outputs.release_tag }}
+          ./.github/scripts/update_cli.sh "$RELEASE_TAG"
 
       - name: Track large files with Git LFS
         if: steps.checkmarx-ast-cli.outputs.current_tag != steps.checkmarx-ast-cli.outputs.release_tag
