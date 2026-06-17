@@ -88,6 +88,12 @@ jobs:
           node-version: 22.11.0
           registry-url: https://npm.echohq.com/
 
+      # CONFIGURE GITHUB PACKAGES AUTH FOR PUBLISH
+      - name: Configure GitHub Packages auth
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "//npm.pkg.github.com/:_authToken=${GH_TOKEN}" >> $NPM_CONFIG_USERCONFIG
+
       # GET TAG NAME
       - name: Generate Tag name
         id: set_tag_name
