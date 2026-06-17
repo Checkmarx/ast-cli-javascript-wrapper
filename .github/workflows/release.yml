@@ -92,7 +92,7 @@ jobs:
       - name: Configure GitHub Packages auth
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "//npm.pkg.github.com/:_authToken=${GH_TOKEN}" >> $NPM_CONFIG_USERCONFIG
+        run: npm config set //npm.pkg.github.com/:_authToken "${GH_TOKEN}"
 
       # GET TAG NAME
       - name: Generate Tag name
