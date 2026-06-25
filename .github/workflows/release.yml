@@ -77,6 +77,14 @@ jobs:
           fetch-depth: 0
           lfs: true  # Ensure LFS files are checked out
 
+      # VERIFY SINGLE LOCKFILE
+      - name: Verify single lockfile
+        run: |
+          if [ -f package-lock.json ] && [ -f yarn.lock ]; then
+            echo "ERROR: Both lockfiles exist"
+            exit 1
+          fi
+
       # GIT CONFIGURATION
       - run: |
           git config user.name github-actions
@@ -133,7 +141,7 @@ jobs:
       # RUN NPM INSTALL AND BUILD
       - name: NPM ci and build
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm run build
 
       # CREATE PR FOR VERSION
