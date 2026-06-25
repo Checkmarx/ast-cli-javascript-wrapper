@@ -141,7 +141,7 @@ jobs:
       # RUN NPM INSTALL AND BUILD
       - name: NPM ci and build
         run: |
-          npm ci --ignore-scripts
+          npm ci
           npm run build
 
       # CREATE PR FOR VERSION
