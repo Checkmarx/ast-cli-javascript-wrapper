@@ -77,6 +77,19 @@ jobs:
           fetch-depth: 0
           lfs: true  # Ensure LFS files are checked out
 
+      # VERIFY SINGLE LOCKFILE
+      - name: Verify single lockfile
+        run: |
+          if [ -f package-lock.json ] && [ -f yarn.lock ]; then
+            echo "ERROR: Both lockfiles exist"
+            exit 1
+          fi
+
+          if [ ! -f yarn.lock ] && [ ! -f package-lock.json ]; then
+            echo "ERROR: No lockfile found,Policy requires exactly ONE package manager lockfile"
+            exit 1
+          fi
+
       # GIT CONFIGURATION
       - run: |
           git config user.name github-actions

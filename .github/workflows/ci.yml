@@ -18,6 +18,18 @@ jobs:
           sudo apt-get install git-lfs
           git lfs install
 
+      - name: Verify single lockfile
+        run: |
+          if [ -f package-lock.json ] && [ -f yarn.lock ]; then
+            echo "ERROR: Both lockfiles exist"
+            exit 1
+          fi
+
+          if [ ! -f yarn.lock ] && [ ! -f package-lock.json ]; then
+            echo "ERROR: No lockfile found,Policy requires exactly ONE package manager lockfile"
+            exit 1
+          fi
+
       - name: Use Node.js 22.11.0
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
