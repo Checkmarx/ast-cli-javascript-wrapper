@@ -101,6 +101,14 @@ jobs:
           node-version: 22.11.0
           registry-url: https://npm.echohq.com/
 
+      # CONFIGURE ECHOHQ AUTH
+      - name: Configure echohq auth (both hosts)
+        env:
+          ECHO_NPM_TOKEN: ${{ secrets.ECHO_NPM_TOKEN }}
+        run: |
+          npm config set //npm.echohq.com/:_authToken "${ECHO_NPM_TOKEN}"
+          npm config set //packages.echohq.com/:_authToken "${ECHO_NPM_TOKEN}"
+
       # CONFIGURE GITHUB PACKAGES AUTH FOR PUBLISH
       - name: Configure GitHub Packages auth
         env:
@@ -145,6 +153,8 @@ jobs:
 
       # RUN NPM INSTALL AND BUILD
       - name: NPM ci and build
+        env:
+          ECHO_NPM_TOKEN: ${{ secrets.ECHO_NPM_TOKEN }}
         run: |
           npm ci
           npm run build
