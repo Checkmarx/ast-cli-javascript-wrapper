@@ -104,10 +104,10 @@ jobs:
       # CONFIGURE ECHOHQ AUTH
       - name: Configure echohq auth (both hosts)
         env:
-          ECHO_NPM_TOKEN: ${{ secrets.ECHO_NPM_TOKEN }}
+          ECHO_LIBRARIES_ACCESS_KEY: ${{ secrets.ECHO_LIBRARIES_ACCESS_KEY }}
         run: |
-          npm config set //npm.echohq.com/:_authToken "${ECHO_NPM_TOKEN}"
-          npm config set //packages.echohq.com/:_authToken "${ECHO_NPM_TOKEN}"
+          npm config set //npm.echohq.com/:_authToken "${ECHO_LIBRARIES_ACCESS_KEY}"
+          npm config set //packages.echohq.com/:_authToken "${ECHO_LIBRARIES_ACCESS_KEY}"
 
       # CONFIGURE GITHUB PACKAGES AUTH FOR PUBLISH
       - name: Configure GitHub Packages auth
@@ -154,7 +154,7 @@ jobs:
       # RUN NPM INSTALL AND BUILD
       - name: NPM ci and build
         env:
-          ECHO_NPM_TOKEN: ${{ secrets.ECHO_NPM_TOKEN }}
+          ECHO_LIBRARIES_ACCESS_KEY: ${{ secrets.ECHO_LIBRARIES_ACCESS_KEY }}
         run: |
           npm ci
           npm run build
