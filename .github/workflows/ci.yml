@@ -35,12 +35,6 @@ jobs:
         with:
           node-version: 22.11.0
           registry-url: https://npm.echohq.com/
-      - name: Configure echohq auth (both hosts)
-        env:
-          ECHO_LIBRARIES_ACCESS_KEY: ${{ secrets.ECHO_LIBRARIES_ACCESS_KEY }}
-        run: |
-          npm config set //npm.echohq.com/:_authToken "${ECHO_LIBRARIES_ACCESS_KEY}"
-          npm config set //packages.echohq.com/:_authToken "${ECHO_LIBRARIES_ACCESS_KEY}"
       - run: npm ci
         env:
           ECHO_LIBRARIES_ACCESS_KEY: ${{ secrets.ECHO_LIBRARIES_ACCESS_KEY }}

@@ -101,14 +101,6 @@ jobs:
           node-version: 22.11.0
           registry-url: https://npm.echohq.com/
 
-      # CONFIGURE ECHOHQ AUTH
-      - name: Configure echohq auth (both hosts)
-        env:
-          ECHO_LIBRARIES_ACCESS_KEY: ${{ secrets.ECHO_LIBRARIES_ACCESS_KEY }}
-        run: |
-          npm config set //npm.echohq.com/:_authToken "${ECHO_LIBRARIES_ACCESS_KEY}"
-          npm config set //packages.echohq.com/:_authToken "${ECHO_LIBRARIES_ACCESS_KEY}"
-
       # CONFIGURE GITHUB PACKAGES AUTH FOR PUBLISH
       - name: Configure GitHub Packages auth
         env:
