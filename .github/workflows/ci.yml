@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: 22.11.0
           registry-url: https://npm.echohq.com/
-      - run: npm ci
+      - run: npm ci --loglevel=http
         env:
           ECHO_LIBRARIES_ACCESS_KEY: ${{ secrets.ECHO_LIBRARIES_ACCESS_KEY }}
       - name: Code Linting
