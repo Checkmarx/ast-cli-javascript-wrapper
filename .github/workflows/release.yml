@@ -47,21 +47,28 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   delete:
+    name: Delete Old Packages and Releases
     permissions:
-      contents: write
-      packages: write
-    uses: Checkmarx/ast-cli-javascript-wrapper/.github/workflows/delete-packages-and-releases.yml@main
+      contents: write # For deleting releases
+      packages: write # For deleting packages
+    uses: Checkmarx/ast-cli-javascript-wrapper/.github/workflows/delete-packages-and-releases.yml@abe950ede3b052dfc236f730cf11cc290af53d1c
     with:
       tag: ${{ inputs.jsTag }}
-    secrets: inherit
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     if: inputs.dev == true
   release:
+    name: Release JavaScript Wrapper
     permissions:
-      id-token: write
-      contents: write
-      packages: write
+      id-token: write # For signing artifacts
+      contents: write # For pushing tags and releases
+      packages: write # For publishing packages
     runs-on: cx-public-ubuntu-x64
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,6 +83,7 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true  # Ensure LFS files are checked out
+          persist-credentials: false
 
       # VERIFY SINGLE LOCKFILE
       - name: Verify single lockfile
@@ -185,7 +193,7 @@ jobs:
         if: inputs.dev == false
         run: |
           git pull
-          git tag ${{env.TAG_NAME}}
+          git tag ${TAG_NAME}
           git push --tags
 
 

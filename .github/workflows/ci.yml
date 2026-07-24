@@ -1,16 +1,23 @@
 name: AST Javascript wrapper CI
 
 on: [pull_request]
+
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   integration-tests:
+    name: Run Integration Tests
     runs-on: cx-public-ubuntu-x64
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           lfs: true
+          persist-credentials: false
 
       - name: Install Git LFS
         run: |
