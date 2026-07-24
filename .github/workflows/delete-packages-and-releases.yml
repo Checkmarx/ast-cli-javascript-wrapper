@@ -16,11 +16,16 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   delete:
+    name: Delete Old Packages and Releases
     permissions:
-      contents: write
-      packages: write
+      contents: write # For deleting releases and tags
+      packages: write # For deleting npm packages
     runs-on: cx-public-ubuntu-x64
     steps:
 
