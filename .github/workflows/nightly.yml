@@ -8,11 +8,18 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   nightly:
+    name: Nightly Release Job
     permissions:
-      id-token: write
-      contents: write
-      packages: write
-    uses: Checkmarx/ast-cli-javascript-wrapper/.github/workflows/release.yml@main
-    secrets: inherit
+      id-token: write # For signing artifacts
+      contents: write # For pushing tags and releases
+      packages: write # For publishing packages
+    uses: Checkmarx/ast-cli-javascript-wrapper/.github/workflows/release.yml@abe950ede3b052dfc236f730cf11cc290af53d1c
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ECHO_LIBRARIES_ACCESS_KEY: ${{ secrets.ECHO_LIBRARIES_ACCESS_KEY }}
