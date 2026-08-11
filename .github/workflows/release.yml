@@ -24,8 +24,6 @@ on:
         default: true
         type: boolean
     secrets:
-      GITHUB_TOKEN:
-        required: true
       ECHO_LIBRARIES_ACCESS_KEY:
         required: true
   workflow_dispatch:
@@ -65,8 +63,6 @@ jobs:
     uses: Checkmarx/ast-cli-javascript-wrapper/.github/workflows/delete-packages-and-releases.yml@abe950ede3b052dfc236f730cf11cc290af53d1c
     with:
       tag: ${{ inputs.jsTag }}
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     if: inputs.dev == true
   release:
     name: Release JavaScript Wrapper

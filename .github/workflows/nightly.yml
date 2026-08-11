@@ -21,5 +21,4 @@ jobs:
       packages: write # For publishing packages
     uses: Checkmarx/ast-cli-javascript-wrapper/.github/workflows/release.yml@abe950ede3b052dfc236f730cf11cc290af53d1c
     secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ECHO_LIBRARIES_ACCESS_KEY: ${{ secrets.ECHO_LIBRARIES_ACCESS_KEY }}
