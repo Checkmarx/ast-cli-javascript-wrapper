@@ -1,4 +1,5 @@
 name: Update checkmarx ast cli
+
 on:
   workflow_dispatch:
   repository_dispatch:
@@ -7,15 +8,21 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   update-checkmarx-cli:
+    name: Update Checkmarx CLI Binaries
     permissions:
-      contents: write
+      contents: write # For pushing updated CLI binaries
     runs-on: cx-public-ubuntu-x64
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           lfs: true
+          persist-credentials: false
 
       - name: Install Git LFS
         run: |
