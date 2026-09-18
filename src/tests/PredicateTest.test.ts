@@ -23,6 +23,12 @@ describe("Triage cases", () => {
                 }
             }
         }
+        if (!scan) {
+            const scanShow = await auth.scanShow("d4354650-4ee1-4e10-9b1d-0feaf6c187a7");
+            scan = scanShow?.payload?.pop();
+            output = await auth.getResultsList(scan.id);
+            result = output?.payload?.find(res => res.type === CxConstants.SAST);
+        }
         return { scan, result };
     };
 
