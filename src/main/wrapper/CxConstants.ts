@@ -29,6 +29,7 @@ export enum CxConstants {
     SCA_REMEDIATION_PACKAGE_VERSION = "--package-version",
     CMD_AUTH = "auth",
     SUB_CMD_VALIDATE = "validate",
+    SUB_CMD_LOGOUT = "logout",
     CMD_CONFIGURE = "configure",
     SUB_CMD_SET = "set",
     PROP_NAME = "--prop-name",
