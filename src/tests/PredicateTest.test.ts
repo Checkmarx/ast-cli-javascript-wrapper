@@ -72,9 +72,8 @@ describe("Triage cases", () => {
         const scanType = "sca";
         const state = "To_verify";
         const comment = "comment1";
-        // Update first: the show endpoint returns 404 until a triage record exists for the finding
-        await handleTriageSCAUpdate(projectId, vulnerabilities, scanType, state, comment);
         await handleTriageSCAShow(projectId, vulnerabilities, scanType);
+        await handleTriageSCAUpdate(projectId, vulnerabilities, scanType, state, comment);
     });
     
     it('SCA Triage Show and Update Failure case', async () => {
