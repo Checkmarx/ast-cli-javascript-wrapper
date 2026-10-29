@@ -110,6 +110,13 @@ export class CxWrapper {
         return await exec.executeCommands(this.config.pathToExecutable, commands);
     }
 
+    /** Signs the cx CLI out (`cx auth logout`). No credentials are sent. */
+    async authLogout(): Promise<CxCommandOutput> {
+        const commands: string[] = [CxConstants.CMD_AUTH, CxConstants.SUB_CMD_LOGOUT];
+        const exec = new ExecutionService();
+        return await exec.executeCommands(this.config.pathToExecutable, commands);
+    }
+
     /**
      * Saves an API key or OAuth refresh token as the CLI's own login (`cx configure set cx_apikey`), so
      * every cx process of this user, such as the cx-devassist plugin, uses the same login. cx decides

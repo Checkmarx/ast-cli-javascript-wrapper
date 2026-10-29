@@ -45,6 +45,17 @@ describe("Configure API key", () => {
             ["configure", "set", "--prop-name", "cx_apikey", "--prop-value", ""]);
     });
 
+    it('authLogout runs auth logout without credentials', async () => {
+        const done = new CxCommandOutput();
+        done.exitCode = 0;
+        const spy = jest.spyOn(ExecutionService.prototype, "executeCommands").mockResolvedValue(done);
+
+        const output = await wrapper().authLogout();
+
+        expect(output.exitCode).toBe(0);
+        expect(spy).toHaveBeenCalledWith(process.execPath, ["auth", "logout"]);
+    });
+
     it('executeSensitiveCommands returns the exit code and never logs or returns the output', async () => {
         const info = jest.spyOn(logger, "info");
         const error = jest.spyOn(logger, "error");
