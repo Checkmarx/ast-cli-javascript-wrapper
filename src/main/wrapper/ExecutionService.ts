@@ -105,6 +105,39 @@ export class ExecutionService {
         }));
     }
 
+    /**
+     * Runs a command whose arguments or output hold a secret, such as `configure set` with an API key
+     * (cx prints the value it sets). Unlike executeCommands, the arguments are passed unchanged, and
+     * cx's stdout and stderr are drained but never logged or returned: only the exit code is.
+     */
+    executeSensitiveCommands(pathToExecutable: string, commands: string[]): Promise<CxCommandOutput> {
+        return new Promise((resolve) => {
+            let settled = false;
+            const finish = (code: number, status: string) => {
+                if (settled) {
+                    return;
+                }
+                settled = true;
+                const cxCommandOutput = new CxCommandOutput();
+                cxCommandOutput.exitCode = code;
+                cxCommandOutput.status = status;
+                resolve(cxCommandOutput);
+            };
+
+            const child = spawner.spawn(pathToExecutable, commands, {windowsHide: true});
+            child.stdout?.resume();
+            child.stderr?.resume();
+            child.on('error', () => {
+                logger.error("Failed to start AST-CLI");
+                finish(-1, "Failed to start AST-CLI");
+            });
+            child.on('exit', (code: number) => {
+                logger.info("Exit code received from AST-CLI: " + code);
+                finish(code, code === 0 ? "" : "AST-CLI exited with code " + code);
+            });
+        });
+    }
+
     executeKicsCommands(pathToExecutable: string, commands: string[], output?: string): [Promise<CxCommandOutput>, any] {
         return [new Promise((resolve, reject) => {
             let stderr = "";
