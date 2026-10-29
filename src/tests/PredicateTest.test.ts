@@ -67,8 +67,8 @@ describe("Triage cases", () => {
     };
 
     it('SCA Triage Show and Update Successful case', async () => {
-        const projectId = "fc8470df-a38e-4def-bebe-6839947f6f7e";
-        const vulnerabilities = "packagename=Npm-tar-fs,packageversion=2.1.1,vulnerabilityId=CVE-2025-59343,packagemanager=npm";
+        const projectId = "d4d7f382-8dee-48c7-ac8f-67fab2c313a8";
+        const vulnerabilities = "packagename=Maven-org.apache.tomcat.embed:tomcat-embed-core,packageversion=9.0.14,vulnerabilityId=CVE-2024-56337,packagemanager=maven";
         const scanType = "sca";
         const state = "To_verify";
         const comment = "comment1";
@@ -91,7 +91,7 @@ describe("Triage cases", () => {
     });
     
     it('SCA Triage Show and Update with empty vulnerabilities', async () => {
-        const projectId = "fc8470df-a38e-4def-bebe-6839947f6f7e";
+        const projectId = "d4d7f382-8dee-48c7-ac8f-67fab2c313a8";
         const vulnerabilities = "";
         const scanType = "sca";
         const state = "To_verify";
