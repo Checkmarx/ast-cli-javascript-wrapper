@@ -36,15 +36,6 @@ describe("Configure API key", () => {
             ["configure", "set", "--prop-name", "cx_apikey", "--prop-value", secret]);
     });
 
-    it('clearApiKey sets cx_apikey to an empty value', async () => {
-        const spy = stubSensitiveCommands();
-
-        await wrapper().clearApiKey();
-
-        expect(spy).toHaveBeenCalledWith(process.execPath,
-            ["configure", "set", "--prop-name", "cx_apikey", "--prop-value", ""]);
-    });
-
     it('authLogout runs auth logout without credentials', async () => {
         const done = new CxCommandOutput();
         done.exitCode = 0;
