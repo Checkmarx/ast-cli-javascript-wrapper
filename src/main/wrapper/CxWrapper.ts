@@ -126,11 +126,6 @@ export class CxWrapper {
         return this.setApiKeyProperty(apiKey);
     }
 
-    /** Removes the CLI's own login by setting cx_apikey to an empty value. */
-    async clearApiKey(): Promise<CxCommandOutput> {
-        return this.setApiKeyProperty("");
-    }
-
     private async setApiKeyProperty(value: string): Promise<CxCommandOutput> {
         const commands: string[] = [
             CxConstants.CMD_CONFIGURE,
