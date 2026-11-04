@@ -90,3 +90,4 @@ CxProject Link: [https://github.com/Checkmarx/ast-cli-javascript-wrapper](https:
 
 
 © 2021 Checkmarx Ltd. All Rights Reserved.
+.
