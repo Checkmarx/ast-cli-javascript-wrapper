@@ -110,6 +110,35 @@ export class CxWrapper {
         return await exec.executeCommands(this.config.pathToExecutable, commands);
     }
 
+    /** Signs the cx CLI out (`cx auth logout`). No credentials are sent. */
+    async authLogout(): Promise<CxCommandOutput> {
+        const commands: string[] = [CxConstants.CMD_AUTH, CxConstants.SUB_CMD_LOGOUT];
+        const exec = new ExecutionService();
+        return await exec.executeCommands(this.config.pathToExecutable, commands);
+    }
+
+    /**
+     * Saves an API key or OAuth refresh token as the CLI's own login (`cx configure set cx_apikey`), so
+     * every cx process of this user, such as the cx-devassist plugin, uses the same login. cx decides
+     * where it is stored. The value is a secret, so cx's output is never logged.
+     */
+    async configureApiKey(apiKey: string): Promise<CxCommandOutput> {
+        return this.setApiKeyProperty(apiKey);
+    }
+
+    private async setApiKeyProperty(value: string): Promise<CxCommandOutput> {
+        const commands: string[] = [
+            CxConstants.CMD_CONFIGURE,
+            CxConstants.SUB_CMD_SET,
+            CxConstants.PROP_NAME,
+            CxConstants.PROP_API_KEY,
+            CxConstants.PROP_VALUE,
+            value,
+        ];
+        const exec = new ExecutionService();
+        return await exec.executeSensitiveCommands(this.config.pathToExecutable, commands);
+    }
+
     async scanCreate(params: ParamTypeMap): Promise<CxCommandOutput> {
         const commands: string[] = [CxConstants.CMD_SCAN, CxConstants.SUB_CMD_CREATE];
         commands.push(...this.initializeCommands(false));
