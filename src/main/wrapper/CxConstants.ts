@@ -130,4 +130,11 @@ export enum CxConstants {
     SCAN_TYPE_FLAG = "--scan-type",
     STATUS = "--status",
     TOTAL_COUNT = "--total-count",
+    // Analytics telemetry flags (AST-182268 / AST-184025). Names are provisional until the AST-CLI change is released.
+    AGENT_VERSION = "--agent-version",
+    CX_PLUGIN_VERSION = "--cx-plugin-version",
+    PLUGIN_TYPE = "--plugin-type",
+    STATUS_RESULT = "--status-result",
+    REPO_URL = "--repo-url",
+    EVENT_ATTRIBUTES = "--event-attributes",
 }
