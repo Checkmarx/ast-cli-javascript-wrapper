@@ -9,6 +9,8 @@ import * as os from "os";
 import CxBFL from "../bfl/CxBFL";
 import path = require('path');
 import { getTrimmedMapValue } from "./utils";
+import { TelemetryEventOptions } from "../telemetry/TelemetryEventOptions";
+import { buildTelemetryEventArgs } from "../telemetry/telemetryArgs";
 
 type ParamTypeMap = Map<CxParamType, string>;
 
@@ -61,7 +63,7 @@ export class CxWrapper {
     }
 
 
-    initializeCommands(formatRequired: boolean): string[] {
+    initializeCommands(formatRequired: boolean, includeAgent = true): string[] {
         const list: string[] = [];
         if (this.config.clientId) {
             list.push(CxConstants.CLIENT_ID);
@@ -92,7 +94,7 @@ export class CxWrapper {
                 list.push(param)
             })
         }
-        if (this.config.agentName) {
+        if (includeAgent && this.config.agentName) {
             list.push(CxConstants.AGENT);
             list.push(this.config.agentName);
         }
@@ -600,6 +602,23 @@ export class CxWrapper {
             CxConstants.TOTAL_COUNT, totalCount.toString()
         ];
         commands.push(...this.initializeCommands(false));
+        const exec = new ExecutionService();
+        return exec.executeCommands(this.config.pathToExecutable, commands);
+    }
+
+    /**
+     * Sends a Dev Assist analytics event through `cx telemetry ai`.
+     * Only the fields that are set are sent. When options.agent is set, it replaces
+     * CxConfig.agentName for this call, so --agent is not sent twice.
+     */
+    telemetryEvent(options: TelemetryEventOptions): Promise<CxCommandOutput> {
+        const commands: string[] = [
+            CxConstants.TELEMETRY,
+            CxConstants.SUB_CMD_TELEMETRY_AI,
+            ...buildTelemetryEventArgs(options),
+        ];
+        const hasOwnAgent = options.agent !== undefined && options.agent !== null && options.agent !== "";
+        commands.push(...this.initializeCommands(false, !hasOwnAgent));
         const exec = new ExecutionService();
         return exec.executeCommands(this.config.pathToExecutable, commands);
     }
