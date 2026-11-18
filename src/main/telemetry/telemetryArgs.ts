@@ -5,11 +5,11 @@ const ATTRIBUTE_SEPARATOR = ";";
 const KEY_VALUE_SEPARATOR = "=";
 
 /**
- * Replaces the separator characters so a value can't break the key=value;key=value format.
- * The values sent (IDs, enum values, timestamps, package@version) never legitimately contain them.
+ * Replaces ";" so a value can't break the key=value;key=value format.
+ * The CLI splits each pair on the first "=" only, so "=" is allowed inside a value.
  */
 export function sanitizeAttributeValue(value: string): string {
-    return value.replace(/[;=]/g, "_");
+    return value.replace(/;/g, "_");
 }
 
 /**
@@ -58,6 +58,7 @@ export function buildTelemetryEventArgs(options: TelemetryEventOptions): string[
     pushIfSet(args, CxConstants.PLUGIN_TYPE, options.pluginType);
     pushIfSet(args, CxConstants.STATUS_RESULT, options.statusResult);
     pushIfSet(args, CxConstants.REPO_URL, options.repoUrl);
+    pushIfSet(args, CxConstants.API_VERSION, options.apiVersion);
     pushIfSet(args, CxConstants.EVENT_ATTRIBUTES, serializeEventAttributes(options.eventAttributes));
     return args;
 }

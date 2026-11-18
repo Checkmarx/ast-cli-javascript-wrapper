@@ -33,6 +33,8 @@ export interface TelemetryEventOptions {
     statusResult?: string;
     /** Git repository URL, without credentials. */
     repoUrl?: string;
+    /** Telemetry API version, e.g. v2. Sent as the top-level apiVersion field. */
+    apiVersion?: string;
     /** Event-specific attributes, sent as key=value;key=value. */
     eventAttributes?: { [key: string]: string | undefined };
 }

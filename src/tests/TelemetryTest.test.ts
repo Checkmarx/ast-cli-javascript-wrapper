@@ -85,7 +85,7 @@ describeAnalytics("Telemetry analytics events", () => {
         const output = await new CxWrapper(cxScanConfig).telemetryEvent({
             ...envelope, eventType: "Scan", subType: "scantriggerd", engine: "Asca", problemSeverity: "High",
             totalCount: 3, status: "Success", statusResult: "Critical=0, High=2, Medium=1, Low=0, Info=0",
-            repoUrl: "https://github.com/Checkmarx/ast-cli-javascript-wrapper", eventAttributes: { apiVersion: "v2" },
+            repoUrl: "https://github.com/Checkmarx/ast-cli-javascript-wrapper", apiVersion: "v2", eventAttributes: { apiVersion: "v2" },
         });
         expect(output.exitCode).toBe(0);
     });

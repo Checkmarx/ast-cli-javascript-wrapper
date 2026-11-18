@@ -8,8 +8,12 @@ import { buildTelemetryEventArgs, sanitizeAttributeValue, serializeEventAttribut
 describe("Telemetry event arguments", () => {
 
     describe("sanitizeAttributeValue", () => {
-        it("replaces ; and = with _", () => {
-            expect(sanitizeAttributeValue("a;b=c")).toBe("a_b_c");
+        it("replaces ; with _", () => {
+            expect(sanitizeAttributeValue("a;b;c")).toBe("a_b_c");
+        });
+
+        it("keeps = inside a value, because the CLI splits on the first = only", () => {
+            expect(sanitizeAttributeValue("abc==")).toBe("abc==");
         });
 
         it("keeps values without separators unchanged", () => {
@@ -33,7 +37,7 @@ describe("Telemetry event arguments", () => {
         });
 
         it("sanitizes values that contain separators", () => {
-            expect(serializeEventAttributes({ vulnerabilityId: "x;y=z" })).toBe("vulnerabilityId=x_y_z");
+            expect(serializeEventAttributes({ vulnerabilityId: "x;y=z" })).toBe("vulnerabilityId=x_y=z");
         });
     });
 
@@ -59,6 +63,7 @@ describe("Telemetry event arguments", () => {
                 pluginType: "IDE",
                 statusResult: "Remediation completed successfully.",
                 repoUrl: "https://github.com/org/repo",
+                apiVersion: "v2",
                 eventAttributes: { vulnerabilityId: "lodash@4.17.20", remediationMode: "DevAssist" },
             });
             expect(args).toEqual([
@@ -76,6 +81,7 @@ describe("Telemetry event arguments", () => {
                 "--plugin-type", "IDE",
                 "--status-result", "Remediation completed successfully.",
                 "--repo-url", "https://github.com/org/repo",
+                "--api-version", "v2",
                 "--event-attributes", "vulnerabilityId=lodash@4.17.20;remediationMode=DevAssist",
             ]);
         });
